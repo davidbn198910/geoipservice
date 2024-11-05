@@ -7,9 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import com.odav1d.geoservice.integration.model.GeneralStatistics;
-import com.odav1d.geoservice.service.IpTraceStatisticsService;
+import com.odav1d.geoservice.service.IpTraceStatisticsServiceInterface;
 
 
 @Controller
@@ -17,14 +15,16 @@ import com.odav1d.geoservice.service.IpTraceStatisticsService;
 public class IpStatisticsController {
 	
 	@Autowired
-    private IpTraceStatisticsService ipTraceStatisticsService;
+	private final IpTraceStatisticsServiceInterface ipTraceStatisticsService;
+
+	@Autowired
+    public IpStatisticsController(IpTraceStatisticsServiceInterface ipTraceStatisticsService) {
+        this.ipTraceStatisticsService = ipTraceStatisticsService;
+    }
 	
 	@GetMapping("/getStatistics")
     public String getall(Model model) {
-		GeneralStatistics generalStatistics = ipTraceStatisticsService.requestsByCountryStatistics();
-		
-		
-		model.addAttribute("generalStatistics", generalStatistics);    	
+		model.addAttribute("generalStatistics", ipTraceStatisticsService.requestsByCountryStatistics());    	
         return "statistics";
     }
 
