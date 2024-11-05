@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: trackingIP_postgres
+    environment:
+      POSTGRES_DB: trackingIPDB
+      POSTGRES_USER: serviceipuser
+      POSTGRES_PASSWORD: serviceipuser0001
+    ports:
+      - "30002:5432"
+    networks:
+      - my_network
+
+  app:
+    image: geoipservice:1.0.0
+    container_name: geoipservice_app
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/trackingIPDB
+      SPRING_DATASOURCE_USERNAME: serviceipuser
+      SPRING_DATASOURCE_PASSWORD: serviceipuser0001
+    networks:
+      - my_network
+
+networks:
+  my_network:
+
