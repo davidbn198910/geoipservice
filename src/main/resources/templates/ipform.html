@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Dirección IP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #007acc;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005f99;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Ingrese una Dirección IP</h1>
+        <form action="#" th:action="@{/processIp}" th:object="${ipRequest}" method="post">            
+            <div class="form-group">
+                <label for="ipAddress">Dirección IP:</label>
+                <input type="text" id="ipAddress" th:field="*{ipAddress}" placeholder="Ej. 81.45.23.197" required>
+                
+                <!-- Mensaje de error en caso de validación fallida -->
+                <div class="error-message" th:if="${#fields.hasErrors('ipAddress')}" 
+                     th:errors="*{ipAddress}"></div>
+            </div>
+			<button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>

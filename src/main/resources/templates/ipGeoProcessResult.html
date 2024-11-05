@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado de Procesamiento de Geolocalización IP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #007acc;
+        }
+        .info-section {
+            margin-bottom: 20px;
+        }
+        .info-section p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .table-container {
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007acc;
+            color: white;
+        }
+        .distance {
+            font-size: 1.2em;
+            color: #555;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resultado de Procesamiento de Geolocalización IP</h1>
+
+        <div class="info-section">
+            <p>IP: <span th:text="${ipInfo.ip}"></span></p>
+            <p>País: <span th:text="${ipInfo.pais}"></span></p>
+            <p>ISO Code: <span th:text="${ipInfo.isoCode}"></span></p>
+            <p>Ciudad: <span th:text="${ipInfo.ciudad}"></span></p>
+        </div>
+
+        <div class="table-container">
+            <h3>Idiomas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código de Lenguaje</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="language : ${ipInfo.languages}">
+                        <td th:text="${language.key}">Código</td>
+                        <td th:text="${language.value}">Nombre</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h3>Hora Local</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="hora : ${ipInfo.hora}">
+                        <td th:text="${hora}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h3>Monedas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Símbolo</th>
+                        <th>Última tasa en USD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="currency : ${ipInfo.currencies}">
+                        <td th:text="${currency.code}">Código</td>
+                        <td th:text="${currency.name}">Nombre</td>
+                        <td th:text="${currency.symbol}">Símbolo</td>
+                        <td th:text="${currency.lastRate}">Tasa en USD</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="distance">Distancia estimada a Buenos Aires: <span th:text="${ipInfo.distancia}"></span> km</p>
+        <a href="/ipform" class="back-button">Volver al formulario de IP</a>
+    </div>
+</body>
+</html>

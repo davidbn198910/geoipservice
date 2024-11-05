@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Estadísticas Generales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .statistics-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            color: #007acc;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        p {
+            font-size: 1em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .record {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .record p {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007acc;
+            color: white;
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f4f4f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="statistics-container">
+        <h1>Estadísticas Generales</h1>
+
+        <!-- Distancia Promedio -->
+        <h2>Distancia Promedio</h2>
+        <p th:text="${generalStatistics.averageDistance}">Distancia Promedio</p>
+
+        <!-- Registro con la Menor Distancia -->
+        <h2>Registro con la Menor Distancia</h2>
+        <div class="record">
+            <p><strong>Dirección IP:</strong> <span th:text="${generalStatistics.shorterDistance.ipAddress}"></span></p>
+            <p><strong>País:</strong> <span th:text="${generalStatistics.shorterDistance.country}"></span></p>
+            <p><strong>Ciudad:</strong> <span th:text="${generalStatistics.shorterDistance.city}"></span></p>
+            <p><strong>Distancia a Buenos Aires:</strong> <span th:text="${generalStatistics.shorterDistance.distanceToBuenosAires}"></span></p>
+            <p><strong>Fecha y Hora:</strong> <span th:text="${generalStatistics.shorterDistance.timestamp}"></span></p>
+        </div>
+
+        <!-- Registro con la Mayor Distancia -->
+        <h2>Registro con la Mayor Distancia</h2>
+        <div class="record">
+            <p><strong>Dirección IP:</strong> <span th:text="${generalStatistics.largerDistance.ipAddress}"></span></p>
+            <p><strong>País:</strong> <span th:text="${generalStatistics.largerDistance.country}"></span></p>
+            <p><strong>Ciudad:</strong> <span th:text="${generalStatistics.largerDistance.city}"></span></p>
+            <p><strong>Distancia a Buenos Aires:</strong> <span th:text="${generalStatistics.largerDistance.distanceToBuenosAires}"></span></p>
+            <p><strong>Fecha y Hora:</strong> <span th:text="${generalStatistics.largerDistance.timestamp}"></span></p>
+        </div>
+
+        <!-- Estadísticas de Solicitudes por País -->
+        <h2>Estadísticas de Solicitudes por País</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ciudad</th>
+                    <th>País</th>
+                    <th>Distancia</th>
+                    <th>Cantidad de Solicitudes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="request : ${generalStatistics.requestsByCountryStatistics}">
+                    <td th:text="${request.city}"></td>
+                    <td th:text="${request.country}"></td>
+                    <td th:text="${request.distance}"></td>
+                    <td th:text="${request.requestCount}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
