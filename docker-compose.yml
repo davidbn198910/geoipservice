@@ -1,30 +1,26 @@
 services:
-  db:
+  trackingIP_postgres:
     image: postgres:latest
-    container_name: trackingIP_postgres
     environment:
       POSTGRES_DB: trackingIPDB
-      POSTGRES_USER: serviceipuser
-      POSTGRES_PASSWORD: serviceipuser0001
+      POSTGRES_USER: trackingIpUser
+      POSTGRES_PASSWORD: trackingIpUser0001
     ports:
-      - "30002:5432"
+      - "30001:5432"
     networks:
-      - my_network
+      - geoipservice-network
 
-  app:
-    image: geoipservice:1.0.0
-    container_name: geoipservice_app
+  geoipservice_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
-      - db
+      - trackingIP_postgres
     ports:
       - "8081:8081"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/trackingIPDB
-      SPRING_DATASOURCE_USERNAME: serviceipuser
-      SPRING_DATASOURCE_PASSWORD: serviceipuser0001
     networks:
-      - my_network
+      - geoipservice-network
 
 networks:
-  my_network:
-
+  geoipservice-network:
+    driver: bridge
